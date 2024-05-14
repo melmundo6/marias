@@ -46,4 +46,19 @@ class ImagesController extends Controller
 
         return view('image', compact(['image', 'width', 'height','size']))->render();
     }
+
+    public function getImage($size){
+        if(!file_exists(public_path('img/results/' . $size . '.png'))){
+            return json_encode([
+                'code' => 400,
+                'message' => 'not found'
+            ]);
+        }
+        return json_encode([
+            'code' => 200,
+            'message' => [
+                'img' => 'https://marias.prodooh.com/img/results/'.$size.'.png'
+            ]
+        ]);
+    }
 }

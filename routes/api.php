@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/images', [App\Http\Controllers\Images\ImagesController::class, 'store'])->name('images.store');
+Route::get('/getImage/{size}', [App\Http\Controllers\Images\ImagesController::class, 'getImage'])->name('getImage');
