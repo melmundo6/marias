@@ -68,8 +68,8 @@
                 if (data.imageUrls) {
                     buttonContainer.innerHTML = '';
                     data.imageUrls.forEach(img => {
-                        for (const [size, url] of Object.entries(img)) {
-                            let btn = `<button type="button" class="btn btn-success m-1" onclick="window.open('${url}', '_blank')">Ver Imagen ${size}</button>`;
+                        for (const [key, value] of Object.entries(img)) {
+                            let btn = `<button type="button" class="btn btn-success m-1" onclick="window.open('${value}', '_blank')">Ver Imagen ${key}</button>`;
                             buttonContainer.innerHTML += btn;
                         }
                         buttonNew.innerHTML = `<button type="button" class="btn btn-info m-1" onclick="window.location.reload()">Generar nuevo</button>`;

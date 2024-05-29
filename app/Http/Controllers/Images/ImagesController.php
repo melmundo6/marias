@@ -24,16 +24,43 @@ class ImagesController extends Controller
         $data['url'] = $name;
         $image = Image::create($data);
         $img = new CreateImage();
-        $img->generate($image);
+
+        /*HTML*/
+        $htmlOutputs = $img->generateHtml($image);
+        return $this->html($htmlOutputs);
+
+        /*Image*/
+        // $imgOutputs  = $img->generateImg($image);
+        // return $this->imagen($imgOutputs);
+
+        // $img->generate($image);
+        // $urls = [];
+        // foreach($data['measures'] as $size){
+        //     $urls[] = [$size => asset('img/results/' . $size . '.png')];
+        // }
+        // return response()->json(['message' => 'ok', 'imageUrls' => $urls]);
+    }
+
+    public function admin(){
+        return view('admin');
+    }
+
+    private function html($htmlOutputs){
+        $urls = [];
+        foreach ($htmlOutputs as $size => $html) {
+            $htmlFileName = $size . '.html';
+            Storage::disk('html')->put($htmlFileName, $html);
+            $urls[] = [$size => asset('html/' . $htmlFileName)];
+        }
+        return response()->json(['message' => 'ok', 'imageUrls' => $urls]);
+    }
+
+    private function imagen($data){
         $urls = [];
         foreach($data['measures'] as $size){
             $urls[] = [$size => asset('img/results/' . $size . '.png')];
         }
         return response()->json(['message' => 'ok', 'imageUrls' => $urls]);
-    }
-
-    public function admin(){
-        return view('admin');
     }
 
     public function test(){

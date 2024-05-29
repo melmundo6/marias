@@ -54,6 +54,11 @@ return [
             'root' => public_path('img/fase2'),
             'visibility' => 'public',
         ],
+        'html' => [
+            'driver' => 'local',
+            'root' => public_path('html'),
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

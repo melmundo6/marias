@@ -9,12 +9,12 @@ use Knp\Snappy\Image;
 class CreateImage
 {
 
-    public function generate(info $image)
+    public function generateImg(info $image)
     {
         foreach ($image->measures as $size) {
             $width = explode('x', $size)[0];
             $height = explode('x', $size)[1];
-            $html = view('image', compact(['image', 'width', 'height','size']))->render();
+            $html = view('image', compact(['image', 'width', 'height', 'size']))->render();
             $snappy = new Image(config('snappy.image.binary'));
             $snappy->setOption('enable-local-file-access', true);
             $snappy->setOption('format', 'png');
@@ -26,5 +26,21 @@ class CreateImage
             }
             $snappy->generateFromHtml($html, public_path('img/results/' . $size . '.png'));
         }
+    }
+
+    public function generateHtml(info $image)
+    {
+        $htmlOutputs = [];
+
+        foreach ($image->measures as $size) {
+            $width = explode('x', $size)[0];
+            $height = explode('x', $size)[1];
+
+            $html = view('image', compact(['image', 'width', 'height', 'size']))->render();
+
+            $htmlOutputs[$size] = $html;
+        }
+
+        return $htmlOutputs;
     }
 }
